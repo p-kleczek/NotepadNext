@@ -82,7 +82,8 @@ jobs:
 
     - run: |
         sudo apt-get install libxkbcommon-dev libxkbcommon-x11-0 fuse libxcb-cursor-dev
-        qmake src/NotepadNext.pro
+        cd src
+        qmake NotepadNext.pro
         make -j$(nproc)
 
     - name: Perform CodeQL Analysis
