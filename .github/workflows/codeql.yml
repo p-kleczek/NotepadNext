@@ -59,7 +59,7 @@ jobs:
     - name: Setup
       run: |
         sudo apt-get -y update
-        sudo apt-get install libxkbcommon-dev libxkbcommon-x11-0 fuse libxcb-cursor-dev gdb
+        sudo apt-get install libxkbcommon-dev libxkbcommon-x11-0 fuse libxcb-cursor-dev gdb build-essential
 
     # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
