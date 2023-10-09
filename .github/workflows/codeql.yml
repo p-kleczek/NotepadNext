@@ -59,7 +59,7 @@ jobs:
     - name: Setup
       run: |
         sudo apt-get -y update
-        sudo apt-get install libxkbcommon-dev libxkbcommon-x11-0 fuse libxcb-cursor-dev
+        sudo apt-get install libxkbcommon-dev libxkbcommon-x11-0 fuse libxcb-cursor-dev gdb
 
     # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
@@ -88,7 +88,7 @@ jobs:
     - run: |
         mkdir build
         cd build
-        qmake ../src/NotepadNext.pro "DISTRIBUTION=AppImage"
+        gdb --batch -ex "run" -ex "bt" --args qmake ../src/NotepadNext.pro "DISTRIBUTION=AppImage"
         make -j$(nproc)
 
     - name: Perform CodeQL Analysis
