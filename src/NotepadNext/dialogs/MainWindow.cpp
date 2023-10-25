@@ -336,6 +336,10 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         quickFind->show();
     });
 
+    connect(ui->actionFindInFiles, &QAction::triggered, this, [=]() {
+        showFindReplaceDialog(FindReplaceDialog::FIND_IN_FILES_TAB);
+    });
+
     connect(ui->actionReplace, &QAction::triggered, this, [=]() {
         showFindReplaceDialog(FindReplaceDialog::REPLACE_TAB);
     });

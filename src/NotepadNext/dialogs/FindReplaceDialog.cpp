@@ -59,6 +59,7 @@ FindReplaceDialog::FindReplaceDialog(ISearchResultsHandler *searchResults, MainW
     tabBar = new QTabBar();
     tabBar->addTab(tr("Find"));
     tabBar->addTab(tr("Replace"));
+    tabBar->addTab(tr("Find in Files"));
     tabBar->setExpanding(false);
     qobject_cast<QVBoxLayout *>(layout())->insertWidget(0, tabBar);
     connect(tabBar, &QTabBar::currentChanged, this, &FindReplaceDialog::changeTab);
@@ -144,6 +145,11 @@ FindReplaceDialog::FindReplaceDialog(ISearchResultsHandler *searchResults, MainW
 
         showMessage(tr("Replaced %Ln matches", "", count), "green");
     });
+
+    // FIXME: Add buttons "Find All", "Replace in Files"
+    // FIXME: Add UI elements: "Filters", "Directory"
+    // FIXME: Add UI elements: "Follow current doc", "In all sub-folders", "In hidden folders"
+
     connect(ui->buttonClose, &QPushButton::clicked, this, &FindReplaceDialog::close);
 
     loadSettings();
@@ -416,32 +422,93 @@ void FindReplaceDialog::adjustOpacityAlways(bool checked)
 
 void FindReplaceDialog::changeTab(int index)
 {
-    if (index == 0) {
+    if (index == FIND_TAB) {
         ui->labelReplaceWith->setMaximumHeight(0);
         ui->comboReplace->setMaximumHeight(0);
         // The combo box isn't actually "hidden", so adjust the focus policy so it does not get tabbed to
         ui->comboReplace->setFocusPolicy(Qt::NoFocus);
 
+        ui->labelFilter->setMaximumHeight(0);
+        ui->comboFilter->setMaximumHeight(0);
+        ui->comboFilter->setFocusPolicy(Qt::NoFocus);
+
+        ui->labelDirectory->setMaximumHeight(0);
+        ui->comboDirectory->setMaximumHeight(0);
+        ui->comboDirectory->setFocusPolicy(Qt::NoFocus);
+        ui->buttonFindInFilesBrowse->setMaximumHeight(0);
+
         ui->buttonReplace->hide();
         ui->buttonReplaceAll->hide();
         ui->buttonReplaceAllInDocuments->hide();
 
+        ui->buttonFind->show();
         ui->buttonCount->show();
         ui->buttonFindAllInCurrent->show();
         ui->buttonFindAllInDocuments->show();
+
+        ui->buttonFindAll->hide();
+        ui->buttonReplaceInFiles->hide();
+
+        ui->checkBoxBackwardsDirection->show();
+        ui->checkBoxWrapAround->show();
     }
-    else if (index == 1) {
+    else if (index == REPLACE_TAB) {
         ui->labelReplaceWith->setMaximumHeight(QWIDGETSIZE_MAX);
         ui->comboReplace->setMaximumHeight(QWIDGETSIZE_MAX);
         ui->comboReplace->setFocusPolicy(Qt::StrongFocus); // Reset its focus policy
 
+        ui->buttonFind->show();
         ui->buttonReplace->show();
         ui->buttonReplaceAll->show();
         ui->buttonReplaceAllInDocuments->show();
 
+        ui->labelFilter->setMaximumHeight(0);
+        ui->comboFilter->setMaximumHeight(0);
+        ui->comboFilter->setFocusPolicy(Qt::NoFocus);
+
+        ui->labelDirectory->setMaximumHeight(0);
+        ui->comboDirectory->setMaximumHeight(0);
+        ui->comboDirectory->setFocusPolicy(Qt::NoFocus);
+        ui->buttonFindInFilesBrowse->setMaximumHeight(0);
+
         ui->buttonCount->hide();
         ui->buttonFindAllInCurrent->hide();
         ui->buttonFindAllInDocuments->hide();
+
+        ui->buttonFindAll->hide();
+        ui->buttonReplaceInFiles->hide();
+
+        ui->checkBoxBackwardsDirection->show();
+        ui->checkBoxWrapAround->show();
+    }
+    else if (index == FIND_IN_FILES_TAB) {
+        // FIXME: Instead of magic numbers -- use IDs of tabs.
+        ui->labelReplaceWith->setMaximumHeight(QWIDGETSIZE_MAX);
+        ui->comboReplace->setMaximumHeight(QWIDGETSIZE_MAX);
+        ui->comboReplace->setFocusPolicy(Qt::StrongFocus); // Reset its focus policy
+
+        ui->buttonFindAll->show();
+        ui->buttonReplaceInFiles->show();
+
+        ui->labelFilter->setMaximumHeight(QWIDGETSIZE_MAX);
+        ui->comboFilter->setMaximumHeight(QWIDGETSIZE_MAX);
+        ui->comboFilter->setFocusPolicy(Qt::StrongFocus);
+
+        ui->labelDirectory->setMaximumHeight(QWIDGETSIZE_MAX);
+        ui->comboDirectory->setMaximumHeight(QWIDGETSIZE_MAX);
+        ui->comboDirectory->setFocusPolicy(Qt::StrongFocus);
+        ui->buttonFindInFilesBrowse->setMaximumHeight(QWIDGETSIZE_MAX);
+
+        ui->buttonFind->hide();
+        ui->buttonCount->hide();
+        ui->buttonFindAllInCurrent->hide();
+        ui->buttonFindAllInDocuments->hide();
+        ui->buttonReplace->hide();
+        ui->buttonReplaceAll->hide();
+        ui->buttonReplaceAllInDocuments->hide();
+
+        ui->checkBoxBackwardsDirection->hide();
+        ui->checkBoxWrapAround->hide();
     }
 
     ui->comboFind->setFocus();
