@@ -110,15 +110,17 @@ QVector<ScintillaNext *> DockedEditor::editors() const
     return editors;
 }
 
-void DockedEditor::switchToEditor(const ScintillaNext *editor)
+bool DockedEditor::switchToEditor(const ScintillaNext *editor)
 {
     ads::CDockWidget *dockWidget = qobject_cast<ads::CDockWidget *>(editor->parentWidget());
 
     if (dockWidget == Q_NULLPTR) {
         qWarning() << "Expected editor's parent to be CDockWidget";
+        return false;
     }
     else {
         dockWidget->raise();
+        return true;
     }
 }
 

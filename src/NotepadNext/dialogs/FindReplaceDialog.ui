@@ -58,6 +58,137 @@
      <property name="spacing">
       <number>0</number>
      </property>
+     <item row="2" column="1">
+      <layout class="QVBoxLayout" name="verticalLayout_4">
+       <property name="spacing">
+        <number>6</number>
+       </property>
+       <property name="leftMargin">
+        <number>12</number>
+       </property>
+       <property name="topMargin">
+        <number>6</number>
+       </property>
+       <item>
+        <widget class="QPushButton" name="buttonFind">
+         <property name="text">
+          <string>Find</string>
+         </property>
+         <property name="autoDefault">
+          <bool>false</bool>
+         </property>
+         <property name="default">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="buttonCount">
+         <property name="text">
+          <string>Coun&amp;t</string>
+         </property>
+         <property name="autoDefault">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="buttonReplace">
+         <property name="text">
+          <string>&amp;Replace</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="buttonReplaceAll">
+         <property name="text">
+          <string>Replace &amp;All</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="buttonReplaceAllInDocuments">
+         <property name="text">
+          <string>Replace All in &amp;Opened Documents</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="buttonFindAllInDocuments">
+         <property name="text">
+          <string>Find All in All &amp;Opened Documents</string>
+         </property>
+         <property name="autoDefault">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="buttonFindAllInCurrent">
+         <property name="text">
+          <string>Find All in Current Document</string>
+         </property>
+         <property name="autoDefault">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="buttonFindAll">
+         <property name="text">
+          <string>Find All</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="buttonReplaceInFiles">
+         <property name="text">
+          <string>Replace in Files</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="buttonClose">
+         <property name="text">
+          <string>Close</string>
+         </property>
+         <property name="autoDefault">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="checkBoxInAllSubfolders">
+         <property name="text">
+          <string>In all sub-folders</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="checkBoxInHiddenFolders">
+         <property name="text">
+          <string>In hidden folders</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </item>
      <item row="3" column="0">
       <layout class="QHBoxLayout" name="horizontalLayout_3">
        <item>
@@ -242,120 +373,6 @@
        </layout>
       </widget>
      </item>
-     <item row="2" column="1">
-      <layout class="QVBoxLayout" name="verticalLayout_4">
-       <property name="spacing">
-        <number>6</number>
-       </property>
-       <property name="leftMargin">
-        <number>12</number>
-       </property>
-       <property name="topMargin">
-        <number>6</number>
-       </property>
-       <item>
-        <widget class="QPushButton" name="buttonFind">
-         <property name="text">
-          <string>Find</string>
-         </property>
-         <property name="autoDefault">
-          <bool>false</bool>
-         </property>
-         <property name="default">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="buttonCount">
-         <property name="text">
-          <string>Coun&amp;t</string>
-         </property>
-         <property name="autoDefault">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="buttonReplace">
-         <property name="text">
-          <string>&amp;Replace</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="buttonReplaceAll">
-         <property name="text">
-          <string>Replace &amp;All</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="buttonReplaceAllInDocuments">
-         <property name="text">
-          <string>Replace All in &amp;Opened Documents</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="buttonFindAllInDocuments">
-         <property name="text">
-          <string>Find All in All &amp;Opened Documents</string>
-         </property>
-         <property name="autoDefault">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="buttonFindAllInCurrent">
-         <property name="text">
-          <string>Find All in Current Document</string>
-         </property>
-         <property name="autoDefault">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="buttonFindAll">
-         <property name="text">
-          <string>Find All</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="buttonReplaceInFiles">
-         <property name="text">
-          <string>Replace in Files</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="buttonClose">
-         <property name="text">
-          <string>Close</string>
-         </property>
-         <property name="autoDefault">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <spacer name="verticalSpacer_2">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-      </layout>
-     </item>
      <item row="2" column="0">
       <layout class="QVBoxLayout" name="verticalLayout_5" stretch="0,0,0,0,0,0">
        <property name="leftMargin">
@@ -448,7 +465,7 @@
           </widget>
          </item>
          <item row="2" column="1">
-          <widget class="QComboBox" name="comboFilter">
+          <widget class="QComboBox" name="comboFilters">
            <property name="sizePolicy">
             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
              <horstretch>0</horstretch>

@@ -41,7 +41,7 @@ public:
 
     QVector<ScintillaNext *> editors() const;
 
-    void switchToEditor(const ScintillaNext *editor);
+    bool switchToEditor(const ScintillaNext *editor);
 
     int count() const;
 

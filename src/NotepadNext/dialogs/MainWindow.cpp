@@ -303,7 +303,12 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     ui->menuView->addAction(srDock->toggleViewAction());
 
     connect(srDock, &SearchResultsDock::searchResultActivated, this, [=](ScintillaNext *editor, int lineNumber, int startPositionFromBeginning, int endPositionFromBeginning) {
-        dockedEditor->switchToEditor(editor);
+        if (!dockedEditor->switchToEditor(editor)) {
+            openFile(editor->getFilePath());
+            editor = currentEditor();
+            ads::CDockWidget *dockWidget = qobject_cast<ads::CDockWidget *>(editor->parentWidget());
+            dockWidget->raise();
+        }
 
         int linePos = editor->positionFromLine(lineNumber);
         editor->goToRange({linePos + startPositionFromBeginning, linePos + endPositionFromBeginning});

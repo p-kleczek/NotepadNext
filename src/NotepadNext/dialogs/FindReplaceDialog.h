@@ -24,6 +24,7 @@
 #include <QEvent>
 #include <QStatusBar>
 #include <QTabBar>
+#include <vector>
 
 #include "Finder.h"
 #include "ISearchResultsHandler.h"
@@ -87,6 +88,9 @@ private slots:
 
 private:
     QString findString();
+    QString filterString();
+    QString directoryString();
+    
     void prepareToPerformSearch(bool replace=false);
     void loadSettings();
     void saveSettings();
@@ -100,6 +104,23 @@ private:
 
     void updateFindList(const QString &text);
     void updateReplaceList(const QString &text);
+    void updateFiltersList(const QString &text);
+    void updateDirectoryList(const QString &text);
+
+    using Patterns = std::vector<QString>;
+
+    void selectFolderDialog();
+    bool findInFiles();
+    bool createFilelistForFiles(std::vector<QString> &fileNames);
+    void getAndValidatePatterns(Patterns &patterns);
+    void getPatterns(Patterns &patterns);
+    void cutString(const QString &str2cut, Patterns& patterns);
+    bool allPatternsAreExclusion(const Patterns &patterns);
+    void getMatchedFileNames(const QDir &dir, size_t level, const Patterns &patterns, std::vector<QString> & fileNames);
+    bool isPatternMatch(const QString& s, QString pattern);
+    bool matchInExcludeDirList(const QString &dirName, const Patterns &patterns, size_t level);
+    bool matchInList(const QString& fileName, const Patterns &patterns);
+    bool findInFilelist(std::vector<QString> & fileNames);
 
     bool isFirstTime = true;
     QPoint position;
