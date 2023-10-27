@@ -28,6 +28,7 @@
 
 #include "ScintillaNext.h"
 #include "MainWindow.h"
+#include "FindInFilesProgressDialog.h"
 
 
 static void convertToExtended(QString &str)
@@ -270,16 +271,18 @@ void FindReplaceDialog::find()
     }
 }
 
-void FindReplaceDialog::findAllInCurrentDocument()
+int FindReplaceDialog::findAllInCurrentDocument()
 {
     qInfo(Q_FUNC_INFO);
 
     bool firstMatch = true;
-
     QString text = findString();
+    int nMatches = 0;
 
     finder->setSearchText(text);
     finder->forEachMatch([&](int start, int end){
+        ++nMatches;
+
         // Only add the file entry if there was a valid search result
         if (firstMatch) {
             searchResultsHandler->newFileEntry(editor);
@@ -297,6 +300,8 @@ void FindReplaceDialog::findAllInCurrentDocument()
 
         return end;
     });
+
+    return nMatches;
 }
 
 void FindReplaceDialog::findAllInDocuments()
@@ -935,7 +940,7 @@ bool FindReplaceDialog::matchInExcludeDirList(const QString &dirName, const Patt
  {
     qInfo(Q_FUNC_INFO);
 
-//    int nbTotal = 0;
+    int nbTotal = 0;
 //    ScintillaEditView *pOldView = _pEditView;
 //    _pEditView = &_invisibleEditView;
 //    Document oldDoc = _invisibleEditView.execute(SCI_GETDOCPOINTER);
@@ -944,19 +949,19 @@ bool FindReplaceDialog::matchInExcludeDirList(const QString &dirName, const Patt
 
     // FIXME: Implement Progress class and its usage here.
     // PowerEditor/src/ScintillaComponent/FindReplaceDlg.h -> class Progress
-//    Progress progress(_pPublicInterface->getHinst());
+    FindInFilesProgressDialog* progress = new FindInFilesProgressDialog(this);
 
     size_t filesCount = fileNames.size();
     size_t filesPerPercent = 1;
 
-    if (filesCount > 1)
-    {
-        if (filesCount >= 200)
+    if (filesCount > 1) {
+        if (filesCount >= 200) {
             filesPerPercent = filesCount / 100;
+        }
 
-//        generic_string msg = _nativeLangSpeaker.getLocalizedStrFromID(
-//            "find-in-files-progress-title", TEXT("Find In Files progress..."));
-//        progress.open(_findReplaceDlg.getHSelf(), msg.c_str());
+        progress->show();
+        progress->raise();
+        progress->activateWindow();
     }
 
     const bool isEntireDoc = true;
@@ -970,33 +975,31 @@ bool FindReplaceDialog::matchInExcludeDirList(const QString &dirName, const Patt
         ScintillaNext *editor = ScintillaNext::fromFile(fileNames.at(i), false);
         setEditor(editor);
 
-        findAllInCurrentDocument();
-//        editor->close();
+        int nb = findAllInCurrentDocument();
 
 //        int nb = _findReplaceDlg.processAll(ProcessFindAll, FindReplaceDlg::_env, isEntireDoc, &findersInfo);
-
 //        if (nb == FIND_INVALID_REGULAR_EXPRESSION)
 //        {
 //            hasInvalidRegExpr = true;
 //            break;
 //        }
 
-//        nbTotal += nb;
+        nbTotal += nb;
 
         if (i == updateOnCount)
         {
             updateOnCount += filesPerPercent;
-//            progress.setPercent(int32_t((i * 100) / filesCount), fileNames.at(i).c_str(), nbTotal);
+            progress->setPercent(int((i * 100) / filesCount), fileNames.at(i), nbTotal);
         }
         else
         {
-//            progress.setInfo(fileNames.at(i).c_str(), nbTotal);
+            progress->setInfo(fileNames.at(i), nbTotal);
         }
     }
 
     setEditor(current_editor);
 
-//    progress.close();
+    progress->close();
 
 //    _findReplaceDlg.finishFilesSearch(nbTotal, int(filesCount), isEntireDoc);
 
@@ -1026,17 +1029,6 @@ bool FindReplaceDialog::matchInExcludeDirList(const QString &dirName, const Patt
 
     return true;
  }
-
-// void Notepad_plus::setCodePageForInvisibleView(Buffer const *pBuffer)
-// {
-// 	intptr_t detectedCp = _invisibleEditView.execute(SCI_GETCODEPAGE);
-// 	intptr_t cp2set = SC_CP_UTF8;
-// 	if (pBuffer->getUnicodeMode() == uni8Bit)
-// 	{
-// 		cp2set = (detectedCp == SC_CP_UTF8 ? CP_ACP : detectedCp);
-// 	}
-// 	_invisibleEditView.execute(SCI_SETCODEPAGE, cp2set);
-// }
 
 // int FindReplaceDlg::processAll(ProcessOperation op, const FindOption *opt, bool isEntire, const FindersInfo *pFindersInfo, int colourStyleID)
 // {

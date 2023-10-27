@@ -71,7 +71,7 @@ public slots:
     void performLastSearch();
 
     void find();
-    void findAllInCurrentDocument();
+    int findAllInCurrentDocument();
     void findAllInDocuments();
     void count();
     void replace();
